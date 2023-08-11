@@ -31,7 +31,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "MichelJonkman\\DirectorCollections\\Providers\\DirectorServiceProvider"
+              "MichelJonkman\\DirectorCollections\\Providers\\CollectionServiceProvider"
             ]
         }
     },
