@@ -19,7 +19,8 @@
     "require": {
         "php": "^8.1",
         "laravel/framework": "^10.0",
-        "micheljonkman/laravel-director": "^0.0.1"
+        "micheljonkman/laravel-director": "^0.0.1",
+        "justinrainbow/json-schema": "^5.2.12"
     },
     "require-dev": {
     },
