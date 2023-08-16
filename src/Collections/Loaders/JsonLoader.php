@@ -39,7 +39,9 @@ class JsonLoader
 
         $fields = $this->loadFields($data['fields']);
 
-        return new Collection($data['name'], $fields);
+        $id = pathinfo($filePath, PATHINFO_FILENAME);
+
+        return new Collection($id, $data['name'], $fields);
     }
 
     /**
@@ -54,7 +56,9 @@ class JsonLoader
                 throw new CollectionLoadException('err');
             }
 
-            $fieldObjects[$name] = app($field['class']);
+            $fieldObjects[$name] = app($field['class'], [
+                'name' => $name
+            ]);
         }
 
         return $fieldObjects;

@@ -2,6 +2,8 @@
 
 namespace MichelJonkman\DirectorCollections\Collections;
 
+use MichelJonkman\DirectorCollections\Exceptions\CollectionLoadException;
+
 class CollectionManager
 {
     protected array $collectionPaths = [];
@@ -16,10 +18,13 @@ class CollectionManager
         return $this->collectionPaths;
     }
 
-    public function getCollections()
+    /**
+     * @return Collection[]
+     * @throws CollectionLoadException
+     */
+    public function getCollections(): array
     {
         $collectionConverter = app(CollectionLoader::class);
-        $collections = $collectionConverter->loadCollections($this->getCollectionPaths());
-        dd($collections);
+        return $collectionConverter->loadCollections($this->getCollectionPaths());
     }
 }

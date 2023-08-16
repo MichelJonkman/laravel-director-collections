@@ -10,11 +10,10 @@ class CollectionServiceProvider extends AggregateServiceProvider
     public function boot(CollectionManager $collectionManager): void
     {
         $collectionManager->addCollectionPath(resource_path('collections'));
-
-        $collectionManager->getCollections();
     }
 
     protected $providers = [
-        BindServiceProvider::class
+        BindServiceProvider::class,
+        EventServiceProvider::class
     ];
 }

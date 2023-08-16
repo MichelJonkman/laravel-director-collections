@@ -4,21 +4,31 @@ namespace MichelJonkman\DirectorCollections\Collections;
 
 use MichelJonkman\DirectorCollections\Collections\Loaders\JsonLoader;
 use MichelJonkman\DirectorCollections\Exceptions\CollectionLoadException;
-use PhpParser\JsonDecoder;
 
 class CollectionLoader
 {
-    public function loadCollections(array $collectionPaths): array
-    {
-        $collections = [];
+    protected array $collections = [];
+    protected bool $loaded = false;
 
-        foreach ($collectionPaths as $collectionPath) {
-            $collections = array_merge($collections, $this->loadCollectionsInPath($collectionPath));
+    /**
+     * @throws CollectionLoadException
+     */
+    public function loadCollections(array $collectionPaths, bool $fresh = false): array
+    {
+        if (!$this->loaded || $fresh) {
+            foreach ($collectionPaths as $collectionPath) {
+                $this->collections = array_merge($this->collections, $this->loadCollectionsInPath($collectionPath));
+            }
+
+            $this->loaded = true;
         }
 
-        return $collections;
+        return $this->collections;
     }
 
+    /**
+     * @throws CollectionLoadException
+     */
     public function loadCollectionsInPath(string $path): array
     {
         $files = glob($path . '/*.json');
@@ -39,5 +49,10 @@ class CollectionLoader
         $loader = app(JsonLoader::class);
 
         return $loader->load($filePath);
+    }
+
+    public function loadCollectionClass(Collection $collection): void
+    {
+        $this->collections[] = $collection;
     }
 }
